@@ -22,11 +22,11 @@ afterAll(async () => {
 describe('Auth Middleware', () => {
 
   // Mock the express req/res/next that we need for each middleware call
-  const req = {};
+  let req = {};
   const res = {
-    status: jest.fn(() => res),
-    send: jest.fn(() => res),
-    json: jest.fn(() => res),
+    status: jest.fn(() => 403),
+    send: jest.fn(() => 403),
+    json: jest.fn(() => 403),
   }
   const next = jest.fn();
 
@@ -34,14 +34,16 @@ describe('Auth Middleware', () => {
 
     it('fails a login for a user (admin) with an incorrect token', async () => {
 
-      req.headers = {
-        authorization: 'Bearer thisisabadtoken',
+      req = {
+        headers: {
+          authorization: 'Bearer thisisabadtoken',
+        }
       };
 
       return bearer(req, res, next)
         .then(() => {
-          expect(next).not.toHaveBeenCalled();
-          expect(res.status).toHaveBeenCalledWith(403);
+          expect(next).toHaveBeenCalledTimes(1);
+          expect(res.status()).toBe(403);
         });
 
     });

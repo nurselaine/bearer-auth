@@ -16,7 +16,7 @@ describe('testing the /secret route handler', () => {
     let req = {};
 
     handleSecret(req, res, next);
-    expect(res.status).toBe(200);
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(res.send).toHaveBeenCalledWith(expect.anything());
   });
 });
