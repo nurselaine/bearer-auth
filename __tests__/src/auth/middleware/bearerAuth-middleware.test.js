@@ -24,9 +24,9 @@ describe('Auth Middleware', () => {
   // Mock the express req/res/next that we need for each middleware call
   let req = {};
   const res = {
-    status: jest.fn(() => 403),
-    send: jest.fn(() => 403),
-    json: jest.fn(() => 403),
+    status: jest.fn(() => res),
+    send: jest.fn(() => res),
+    json: jest.fn(() => res),
   }
   const next = jest.fn();
 
@@ -43,7 +43,7 @@ describe('Auth Middleware', () => {
       return bearer(req, res, next)
         .then(() => {
           expect(next).toHaveBeenCalledTimes(1);
-          expect(res.status()).toBe(403);
+          expect(res.status).toHaveBeenCalledWith(403);
         });
 
     });
