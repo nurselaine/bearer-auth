@@ -10,7 +10,7 @@ async function handleSignup(req, res, next) {
       user: userRecord,
       token: userRecord.token
     };
-    res.status(200).json(output);
+    res.status(201).json(output);
   } catch (e) {
     console.error(e);
     next(e);
@@ -24,7 +24,7 @@ async function handleSignin(req, res, next) {
       user: req.user,
       token: req.user.token
     };
-    res.status(200).json(user);
+    res.status(201).json(user);
   } catch (e) {
     console.error(e);
     next(e);
@@ -47,11 +47,18 @@ async function handleGetUsers(req, res, next) {
 }
 
 function handleSecret(req, res, next) {
-    if(req.headers.Authorization !== users.token){ 
-      return 'Invalid Login'
-    } else {
+  /*
+Using an HTTP REST client, send a request to a “protected” route, such as /secretstuff
+Your request must send an “Authorization” header, with the value of Bearer TOKEN
+TOKEN is the token that you would have returned to the user after their signin step (above)
+If the TOKEN is valid (i.e. if it represents an actual user)
+The route should function as it normally would (sending a response)
+If not
+Send the user an error message stating “Invalid Login”
+
+  */
+ console.log('handle secrect function');
       res.status(200).send("Welcome to the secret area!");
-    }
 }
 
 module.exports = {

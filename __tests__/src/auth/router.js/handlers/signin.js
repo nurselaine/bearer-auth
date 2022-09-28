@@ -29,7 +29,7 @@ describe('Testing the /signin handler', () => {
     }
 
     await handleSignin(req, res, next);
-    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({
         user: expect.objectContaining({
