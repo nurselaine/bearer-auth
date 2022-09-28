@@ -47,7 +47,11 @@ async function handleGetUsers(req, res, next) {
 }
 
 function handleSecret(req, res, next) {
-  res.status(200).send("Welcome to the secret area!");
+    if(req.headers.Authorization !== users.token){ 
+      return 'Invalid Login'
+    } else {
+      res.status(200).send("Welcome to the secret area!");
+    }
 }
 
 module.exports = {
